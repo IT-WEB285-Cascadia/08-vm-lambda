@@ -35,15 +35,24 @@ namespace LuckySpin.Services
 
         public LeaderBoard leaderBoard()
         {
-            return null; //TODO: Implement the logic to fill a Leaderboard ViewModel based on the Players and their Games and Spins in the database
+            var groupedGames = _dbContext.Games 
+            .GroupBy(g => g.Player)
+            .Select(group => new LeaderboardEntry
+             {
+                Player = group.Key,
+                games = group
+             });
+            return null; //DONE: Implement the logic to fill a Leaderboard ViewModel based on the Players and their Games and Spins in the database
         }
 
 
     }
 
-    //TODO: create Supporting Classes for Leaderboard 
+    //DONE: create Supporting Classes for Leaderboard 
     public class LeaderboardEntry
     {
+        public Player Player;
+        public IGrouping<Player, Game> games;
     }
 
 }
