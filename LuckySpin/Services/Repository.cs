@@ -1,6 +1,9 @@
-﻿using LuckySpin.Models;
+﻿using System.Text.RegularExpressions;
+using LuckySpin.Models;
 using LuckySpin.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using SQLitePCL;
 
 namespace LuckySpin.Services
 {
@@ -15,7 +18,6 @@ namespace LuckySpin.Services
         public DbSet<Spin> Spins => _dbContext.Spins;
         public DbSet<Game> Games => _dbContext.Games;
         public DbSet<Player> Players => _dbContext.Players;
-
         //Methods to get Game, Spins and Player for a given GameId
         public Game getGame(int GameId) {
             return _dbContext.Games.FirstOrDefault(g => g.Id == GameId) ?? new Game();
@@ -33,17 +35,27 @@ namespace LuckySpin.Services
             return _dbContext.Games.Where(g => g.PlayerId == PlayerId).ToList();
         }
 
-        public LeaderBoard leaderBoard()
-        {
-            return null; //TODO: Implement the logic to fill a Leaderboard ViewModel based on the Players and their Games and Spins in the database
-        }
+        public LeaderBoard leaderBoard => 
+             new LeaderBoard { 
+            Leaderboard = _dbContext.Games
+            .GroupBy(p => p.Player)
+            .Select(group => new LeaderboardEntry
+            {
+                Player = group.Key,
+                NumSpins = group.Sum(g => g.Spins.Count)
+            })
+            .ToList(),
+            //TODO: Implement the logic to fill a Leaderboard ViewModel based on the Players and their Games and Spins in the database
+        
 
 
-    }
+    };
 
     //TODO: create Supporting Classes for Leaderboard 
     public class LeaderboardEntry
     {
+        public Player Player { get; set; }
+        public int NumSpins { get; set; }
     }
 
 }
