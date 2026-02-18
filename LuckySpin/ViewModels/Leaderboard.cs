@@ -4,6 +4,8 @@ namespace LuckySpin.ViewModels
 {
     public class LeaderBoard
     {
-        public ICollection<LeaderboardEntry> Leaderboard { get; set; } 
+        public ICollection<Repository.LeaderboardEntry> Leaderboard { get; set; } = new List<Repository.LeaderboardEntry>();
+        
     }
+
 }

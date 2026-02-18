@@ -10,6 +10,7 @@
 
 <h1>Lucky Spin</h1> 
 <h2>Players Choice</h2> 
+<a asp-action="LeaderBoard">Leaderboard</a>
 <form asp-action="PlayersChoice" asp-controller="Spinner" method="post">
 <fieldset>
     <label>
@@ -40,7 +41,6 @@
                 <td>@game.Id</td>
                 <td>@game.Player.FirstName (@game.Player.Luck)</td>
                 <td>@game.Spins.Count</td>
-                <td>@game.Player.Bet</td>
             </tr>
             
         }

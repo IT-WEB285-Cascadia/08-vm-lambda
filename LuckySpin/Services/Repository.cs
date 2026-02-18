@@ -38,12 +38,13 @@ namespace LuckySpin.Services
         public LeaderBoard leaderBoard => 
              new LeaderBoard { 
             Leaderboard = _dbContext.Games
-            .GroupBy(p => p.Player)
+            .GroupBy(g => g.Player.FirstName)
             .Select(group => new LeaderboardEntry
             {
-                Player = group.Key,
+                PlayerName = group.Key,
                 NumSpins = group.Sum(g => g.Spins.Count)
             })
+            .OrderByDescending(entry => entry.NumSpins)
             .ToList(),
             //TODO: Implement the logic to fill a Leaderboard ViewModel based on the Players and their Games and Spins in the database
         
@@ -54,8 +55,10 @@ namespace LuckySpin.Services
     //TODO: create Supporting Classes for Leaderboard 
     public class LeaderboardEntry
     {
-        public Player Player { get; set; }
+        public string PlayerName { get; set; } = string.Empty;
         public int NumSpins { get; set; }
+
     }
 
+}
 }

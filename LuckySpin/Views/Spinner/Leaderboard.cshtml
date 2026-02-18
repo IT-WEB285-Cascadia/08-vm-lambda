@@ -1,0 +1,24 @@
+@model LuckySpin.ViewModels.LeaderBoard
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using LuckySpin.Services;
+@{
+    Layout = "_Layout";
+}
+
+<h1>Lucky Spin</h1>
+<h2>Leaderboard</h2>
+<a asp-action="PlayersChoice">Start New Game</a>
+<hr />
+<h2>Top Players by Total Spins</h2>
+<table>
+    <thead><tr><th>Player Name</th><th>Total Spins</th></tr></thead>
+    <tbody>
+        @foreach (Repository.LeaderboardEntry playerName in Model.Leaderboard)
+        {
+            <tr>
+                <td>@playerName.PlayerName</td>
+                <td>@playerName.NumSpins</td>
+            </tr>
+        }
+    </tbody>
+</table> 

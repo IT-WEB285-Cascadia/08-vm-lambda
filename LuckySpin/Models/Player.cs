@@ -17,6 +17,5 @@ namespace LuckySpin.Models
         [Range(3.0, 10.0, ErrorMessage = "bet from $3 to $10")]
         public decimal Balance { get; set; }
         
-        public decimal Bet { get; set;}
     }
 }
