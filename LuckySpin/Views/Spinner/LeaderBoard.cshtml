@@ -1,0 +1,28 @@
+@using LuckySpin.Services
+@using LuckySpin.ViewModels
+@model LuckySpin.ViewModels.LeaderBoard;
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<h2>Leaderboard</h2>
+<input type="button" value="Back" onclick="history.back()" />
+<table>
+    <thead>
+        <tr>
+            <th>Luck</th>
+            <th>Number Of Wins</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (LeaderboardEntry entry in Model.data)
+        {
+            <tr>
+                <td>@entry.luck</td>
+                <td>@entry.winAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>

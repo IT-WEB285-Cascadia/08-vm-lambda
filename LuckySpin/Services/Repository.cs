@@ -1,4 +1,5 @@
-﻿using LuckySpin.Models;
+﻿using System.Reflection.Metadata.Ecma335;
+using LuckySpin.Models;
 using LuckySpin.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,9 +34,17 @@ namespace LuckySpin.Services
             return _dbContext.Games.Where(g => g.PlayerId == PlayerId).ToList();
         }
 
-        public LeaderBoard leaderBoard()
+        public ICollection<LeaderboardEntry> leaderBoard()
         {
-            return null; //TODO: Implement the logic to fill a Leaderboard ViewModel based on the Players and their Games and Spins in the database
+            //TODO: Implement the logic to fill a Leaderboard ViewModel based on the Players and their Games and Spins in the database
+            return _dbContext.Spins.GroupBy(s => s.Game.Player.Luck)
+                                    .Select(group => new LeaderboardEntry 
+            {
+                luck = group.Key,
+                winAmount = group.Count(s => s.Numbers.Contains(group.Key)),
+            })
+            .OrderByDescending(entry => entry.winAmount)
+            .ToList();
         }
 
 
@@ -44,6 +53,9 @@ namespace LuckySpin.Services
     //TODO: create Supporting Classes for Leaderboard 
     public class LeaderboardEntry
     {
+        public int luck { get; set; }
+        public int winAmount { get; set; }
+
     }
 
 }

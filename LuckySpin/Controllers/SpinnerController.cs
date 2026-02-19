@@ -105,6 +105,18 @@ namespace LuckySpin.Controllers
             return RedirectToAction("Spin", new { gameId = game.Id });
         }
 
+        [HttpGet]
+        public IActionResult LeaderBoard()
+        {
+
+            LeaderBoard data = new LeaderBoard()
+            {
+                data = _repository.leaderBoard()
+            };
+
+            return View("Leaderboard", data);
+        }
+
     }
 }
 
