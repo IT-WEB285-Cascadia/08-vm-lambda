@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Net.Http.Headers;
 namespace LuckySpin.Models
 {
     public class Player
@@ -14,6 +16,6 @@ namespace LuckySpin.Models
         //TODO: add a decimal property called Balance. Assign appropriate Range and Error message
         [Range(3.0, 10.0, ErrorMessage = "bet from $3 to $10")]
         public decimal Balance { get; set; }
-
+        
     }
 }
